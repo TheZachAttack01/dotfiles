@@ -1,0 +1,5 @@
+require("snachbarr.plugin_config.rose-pine")
+require("snachbarr.plugin_config.nvim-tree")
+require("snachbarr.plugin_config.lualine")
+require("snachbarr.plugin_config.treesitter")
+require("snachbarr.plugin_config.telescope")

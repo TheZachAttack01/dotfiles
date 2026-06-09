@@ -9,8 +9,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 
-#ZSH_THEME="gnzh"
-ZSH_THEME="agnoster"
+ZSH_THEME="gnzh"
+#ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -136,7 +136,7 @@ alias ll="eza -alh --git --icons=always --color=always"
 alias tree="eza --tree --color=always --git --icons=always"
 alias vim="nvim"
 alias cat="bat"
-
+alias passwordgen=""
 
 # shell wrapper for yazi , use yy to change to current working directory when exiting yazi
 function yy() {
@@ -154,6 +154,38 @@ eval "$(pyenv init - zsh)"
 
 . "$HOME/.local/bin/env"
 
+function flatten() {
+	local target="$PWD"
+ 	echo "Flattening contents of subdirectories into: $target"
+
+  	# Find all regular files below current dir (excluding .git and such)
+  	find . -mindepth 2 -type f | while IFS= read -r file; do
+    	base=$(basename "$file")
+    	dest="$target/$base"
+
+   	 # Handle name collisions
+    	if [[ -e "$dest" ]]; then
+      	echo "⚠️  File exists: $dest"
+      	read -q "REPLY?Overwrite? (y/N): "
+      	echo
+      	[[ $REPLY =~ ^[Yy]$ ]] || continue
+    	fi
+	
+    	mv -v "$file" "$target/"
+  	done
+
+  	# Remove any now-empty directories
+  	find . -type d -empty -delete
+
+  	echo "✅ Flatten complete."
+}
+
+# use chdman to convert .cue/.bin files to .chd 
+cue2chd() {
+    local cue="$1"
+    chdman createcd -i "$cue" -o "${cue:r}.chd"
+}
+
 
 # Have less display colours
 # from: https://wiki.archlinux.org/index.php/Color_output_in_console#man
@@ -165,3 +197,6 @@ export LESS_TERMCAP_me=$'\e[0m'        # reset bold/blink
 export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
 export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
+
+# muxm tab completion
+source "$HOME/.muxm/muxm-completion.bash"

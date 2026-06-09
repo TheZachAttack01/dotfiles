@@ -9,8 +9,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 
-ZSH_THEME="gnzh"
+#ZSH_THEME="gnzh"
 #ZSH_THEME="agnoster"
+ZSH_THEME="pygmalion"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -200,3 +201,4 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 # muxm tab completion
 #source "$HOME/.muxm/muxm-completion.bash"
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
